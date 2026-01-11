@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     [Range(15, 40)][SerializeField] int gravity;
 
     [Header("       Gun      ")]
+    [SerializeField] bool DrawDebug;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
     [SerializeField] int shootRate;
@@ -43,6 +44,12 @@ public class PlayerController : MonoBehaviour
     }
     void movement()
     {
+        if (DrawDebug)
+        {
+            Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
+        }
+        
+
         shootTimer += Time.deltaTime;
 
         if (controller.isGrounded)
