@@ -3,16 +3,28 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+    [Header("       Components      ")]
     [SerializeField] CharacterController controller;
-    [SerializeField] int HP;
-    [SerializeField] int speed;
-    [SerializeField] int sprintMod;
-    [SerializeField] int jumpSpeed;
-    [SerializeField] int jumpMax;
-    [SerializeField] int gravity;
+
+    [Header("       Stats      ")]
+    [Range(1,10)] [SerializeField] int HP;
+    [Range(1, 10)][SerializeField] int speed;
+    [Range(2, 5)][SerializeField] int sprintMod;
+    [Range(1, 20)][SerializeField] int jumpSpeed;
+    [Range(1, 3)][SerializeField] int jumpMax;
+
+    [Header("       Physics      ")]
+    [Range(15, 40)][SerializeField] int gravity;
+
+    [Header("       Gun      ")]
+    [SerializeField] int shootDamage;
+    [SerializeField] int shootDist;
+    [SerializeField] int shootRate;
 
     Vector3 moveDir;
     Vector3 playerVel;
+
+    float shootTimer;
 
     int JumpCount;
     int HPOrig;
@@ -31,6 +43,8 @@ public class PlayerController : MonoBehaviour
     }
     void movement()
     {
+        shootTimer += Time.deltaTime;
+
         if (controller.isGrounded)
         {
             JumpCount = 0;
@@ -38,6 +52,10 @@ public class PlayerController : MonoBehaviour
         else
         {
             playerVel.y -= gravity * Time.deltaTime;
+        }
+        if (Input.GetButton("Fire1") && shootTimer >= shootRate)
+        {
+            shoot();
         }
             moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
         controller.Move(moveDir * speed * Time.deltaTime);
@@ -66,5 +84,25 @@ public class PlayerController : MonoBehaviour
         {
             speed /= sprintMod;
         }
+    }
+
+    void shoot()
+    {
+        shootTimer = 0;
+
+        RaycastHit Hit;
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out Hit, shootDist))
+        {
+            Debug.Log(Hit.collider.name);
+            IDamage dmg = Hit.collider.GetComponent<IDamage>();
+            if (dmg != null)
+            {
+                dmg.takeDamage(shootDamage);
+            }
+
+        }
+        
+   
+
     }
 }

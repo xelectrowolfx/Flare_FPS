@@ -1989,6 +1989,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 978902012}
+  - component: {fileID: 978902016}
   - component: {fileID: 978902015}
   - component: {fileID: 978902014}
   - component: {fileID: 978902013}
@@ -2117,6 +2118,23 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &978902016
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 978902011}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7250fd76570a64b4a85e2285e40fc58f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CameraController
+  sens: 300
+  lockVertMin: -90
+  lockVertMax: 90
+  invertY: 0
+  player: {fileID: 1362794215}
 --- !u!1001 &989603840
 PrefabInstance:
   m_ObjectHideFlags: 0

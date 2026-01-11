@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class DoorController : MonoBehaviour
 {
-    [SerializeField] GameObject Door;
+    [SerializeField] Transform Door;
     [SerializeField] float Width;
 
     Vector3 Position;
@@ -20,7 +20,7 @@ public class DoorController : MonoBehaviour
 
     void OpenDoor()
     {
-        //Door.transform.localPosition = Position.x + Width;
+       // Door.localPosition = Door.localPosition.Set(Position.x += Width, Position.y, Position.z) ;
     }
 
     void CloseDoor()
