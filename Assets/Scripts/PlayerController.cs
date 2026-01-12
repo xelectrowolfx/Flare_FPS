@@ -20,7 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] bool DrawDebug;
     [SerializeField] int shootDamage;
     [SerializeField] int shootDist;
-    [SerializeField] int shootRate;
+    [SerializeField] float shootRate;
 
     Vector3 moveDir;
     Vector3 playerVel;
