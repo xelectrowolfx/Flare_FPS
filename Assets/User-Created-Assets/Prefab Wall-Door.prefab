@@ -149,7 +149,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DoorController
   Door: {fileID: 6671290685588756501}
   Width: 1.75
-  OpenTime: 0
+  OpenTime: 2
 --- !u!135 &2441839658288699042
 SphereCollider:
   m_ObjectHideFlags: 0

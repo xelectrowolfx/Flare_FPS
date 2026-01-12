@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEditor.UIElements;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -9,34 +10,47 @@ public class DoorController : MonoBehaviour
     [SerializeField] int OpenTime;
     [SerializeField] LayerField Layer;
 
-    Vector3 Position;
+    Vector3 Closed;
+    Vector3 Open;
+    Vector3 targetPosition;
+    Vector3 Current;
+
     float doortimer;
        // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Position = Door.transform.localPosition;
+        Closed = Door.transform.localPosition;
+        Open = new Vector3(Closed.x + Width, Closed.y, Closed.z);
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        doortimer += Time.deltaTime;
+        if (Current != targetPosition)
+        {
+            Current = Door.transform.localPosition =
+                        Vector3.MoveTowards(Door.transform.localPosition,
+                        targetPosition,
+                        OpenTime * Time.deltaTime);
+        }
+        
     }
 
     void OpenDoor()
-    { 
-       Door.localPosition = new Vector3(Width, Position.y, Position.z);
+    {
+        targetPosition = Open;
     }
 
     void CloseDoor()
     {
-        Door.localPosition = Position;
+        targetPosition = Closed;
     }
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.isTrigger) { return; }
 
-            if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
             OpenDoor();
             Debug.Log("Door Opening.");
