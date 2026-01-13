@@ -1269,6 +1269,7 @@ GameObject:
   - component: {fileID: 499476488}
   - component: {fileID: 499476485}
   - component: {fileID: 499476486}
+  - component: {fileID: 499476489}
   m_Layer: 7
   m_Name: Enemy 1
   m_TagString: Enemy
@@ -1320,7 +1321,7 @@ GameObject:
   - component: {fileID: 495228613}
   m_Layer: 0
   m_Name: MESH_Infantry
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1368,7 +1369,7 @@ GameObject:
   - component: {fileID: 492013541}
   m_Layer: 0
   m_Name: Bip001
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -1670,7 +1671,7 @@ Animator:
   m_GameObject: {fileID: 492051377}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: c6acf3f29c109e4439950c8f6a85cb2b, type: 3}
-  m_Controller: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: c0b143da4521432419546d096f881683, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
@@ -1720,9 +1721,10 @@ MonoBehaviour:
   agent: {fileID: 499476488}
   model: {fileID: 495228613}
   shootPos: {fileID: 1591257705}
-  HP: 3
   bullet: {fileID: 7307199370166870057, guid: 42246933517c66f4097763e806439334, type: 3}
+  HP: 3
   shootRate: 0.5
+  faceTargetSpeed: 3
 --- !u!195 &499476488
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -1745,6 +1747,33 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!54 &499476489
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 492051377}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 0
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!4 &523856223 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5721681822311517879, guid: ee1bbed94d4852e4c8403c1724312394, type: 3}
@@ -3610,11 +3639,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee1bbed94d4852e4c8403c1724312394, type: 3}
---- !u!1 &1762870433 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5498503713797551146, guid: 33293cfcacee5aa4bb91a099b28b3a97, type: 3}
-  m_PrefabInstance: {fileID: 5587824856593155756}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1763260517 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5721681822311517879, guid: ee1bbed94d4852e4c8403c1724312394, type: 3}
@@ -4166,10 +4190,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2513341989545306982, guid: 33293cfcacee5aa4bb91a099b28b3a97, type: 3}
-      propertyPath: menuWin
-      value: 
-      objectReference: {fileID: 1762870433}
     - target: {fileID: 2852307207441273210, guid: 33293cfcacee5aa4bb91a099b28b3a97, type: 3}
       propertyPath: m_Name
       value: UI
