@@ -1,13 +1,13 @@
 using UnityEngine;
 
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviour, IDamage
 {
     [Header("       Components      ")]
     [SerializeField] CharacterController controller;
 
     [Header("       Stats      ")]
-    [Range(1,10)] [SerializeField] int HP;
+    [Range(1, 10)] [SerializeField] int HP;
     [Range(1, 10)][SerializeField] int speed;
     [Range(2, 5)][SerializeField] int sprintMod;
     [Range(1, 20)][SerializeField] int jumpSpeed;
@@ -111,5 +111,15 @@ public class PlayerController : MonoBehaviour
         
    
 
+    }
+
+    public void takeDamage(int amount)
+    {
+        HP -= amount;
+        //isdead?
+        if(HP <= 0)
+        {
+            GameManager.instance.youLose();
+        }
     }
 }

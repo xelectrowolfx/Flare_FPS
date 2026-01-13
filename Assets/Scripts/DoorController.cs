@@ -50,7 +50,7 @@ public class DoorController : MonoBehaviour
     {
         if (other.isTrigger) { return; }
 
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Enemy"))
         {
             OpenDoor();
             Debug.Log("Door Opening.");
@@ -60,7 +60,7 @@ public class DoorController : MonoBehaviour
     private void OnTriggerExit(Collider other)
     {
         if (other.isTrigger) { return; }
-        if (other.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player") || other.gameObject.CompareTag("Enemy"))
         {
             CloseDoor();
             Debug.Log("Door Closing.");

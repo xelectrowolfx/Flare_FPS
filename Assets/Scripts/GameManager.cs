@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    [Header("       Menu        ")]
+    [Header("       Menus        ")]
     [SerializeField] GameObject menuActive;
     [SerializeField] GameObject menuPause;
     [SerializeField] GameObject menuWin;
@@ -16,10 +16,12 @@ public class GameManager : MonoBehaviour
     public PlayerController playerScript;
 
     float timeScaleOrig;
+    
+    int gameGoalCount;
 
     public static GameManager instance;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         instance = this;
         timeScaleOrig = Time.timeScale;
@@ -64,5 +66,25 @@ public class GameManager : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         menuActive.SetActive(false);
         menuActive = null;
+    }
+
+    public void youLose()
+    {
+        statePause();
+        menuActive = menuLose;
+        menuActive.SetActive(true);
+
+    }
+    public void updateGameGoal(int amount)
+    {
+        gameGoalCount += amount;
+        if(gameGoalCount <= 0)
+        {
+            //you win
+            statePause();
+            menuActive = menuWin;
+            menuActive.SetActive(true);
+
+        }
     }
 }
