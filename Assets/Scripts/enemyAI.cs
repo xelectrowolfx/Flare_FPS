@@ -18,7 +18,7 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] float shootRate;
     [SerializeField] int faceTargetSpeed;
     [SerializeField] int FOV;
-
+    [SerializeField] LayerMask IgnoreLayer;
 
     Color colorOrig;
     
@@ -52,7 +52,7 @@ public class enemyAI : MonoBehaviour, IDamage
         Debug.DrawRay(headPos.position, playerdir);
         RaycastHit hit;
 
-        if (Physics.Raycast(headPos.position, playerdir, out hit))
+        if (Physics.Raycast(headPos.position, playerdir, out hit, float.MaxValue, ~IgnoreLayer))
         {
             if (angleToPlayer <= FOV && hit.collider.CompareTag("Player"))
             {

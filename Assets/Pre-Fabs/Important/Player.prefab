@@ -55,6 +55,9 @@ MonoBehaviour:
   jumpSpeed: 12
   jumpMax: 2
   gravity: 35
+  ignoreLayer:
+    serializedVersion: 2
+    m_Bits: 8
   DrawDebug: 1
   shootDamage: 2
   shootDist: 20
