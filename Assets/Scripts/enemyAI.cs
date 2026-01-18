@@ -10,15 +10,24 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] NavMeshAgent agent;
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPos;
+    [SerializeField] Transform headPos;
     
     [SerializeField] GameObject bullet;
 
     [SerializeField] int HP;
     [SerializeField] float shootRate;
     [SerializeField] int faceTargetSpeed;
+    [SerializeField] int FOV;
+
+
     Color colorOrig;
+    
     float shootTimer;
+    float angleToPlayer;
+
     Vector3 playerdir;
+
+    bool playerinTrigger;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -30,21 +39,60 @@ public class enemyAI : MonoBehaviour, IDamage
     void Update()
     {
         shootTimer += Time.deltaTime;
-
-        playerdir = GameManager.instance.player.transform.position - transform.position;
+        if (playerinTrigger && CanSeePlayer())
+        {
+            
+        }
         
-        agent.SetDestination(GameManager.instance.player.transform.position);
+    }
+    bool CanSeePlayer()
+    {
+        playerdir = GameManager.instance.player.transform.position - headPos.position;
+        angleToPlayer = Vector3.Angle(playerdir, transform.forward);
+        Debug.DrawRay(headPos.position, playerdir);
+        RaycastHit hit;
 
-        if (shootTimer >= shootRate)
+        if (Physics.Raycast(headPos.position, playerdir, out hit))
         {
-            shoot();
+            if (angleToPlayer <= FOV && hit.collider.CompareTag("Player"))
+            {
+                agent.SetDestination(GameManager.instance.player.transform.position);
+
+                if (agent.remainingDistance <= agent.stoppingDistance)
+                {
+                    faceTarget();
+                }
+
+                if (shootTimer >= shootRate)
+                {
+                    shoot();
+                }
+
+
+                return true;
+            }
         }
-        if (agent.remainingDistance <= agent.stoppingDistance)
-        {
-            faceTarget();
-        }
+
+     
+        return false;
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerinTrigger = true;
+        }
+        
+    }
+
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            playerinTrigger = false;
+        }
+    }
     void shoot()
     {
         shootTimer = 0;

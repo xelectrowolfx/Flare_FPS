@@ -1,4 +1,5 @@
 using System.Collections;
+using UnityEditor.UIElements;
 using UnityEngine;
 
 
@@ -16,6 +17,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     [Header("       Physics      ")]
     [Range(15, 40)][SerializeField] int gravity;
+    [SerializeField] LayerMask ignoreLayer;
 
     [Header("       Gun      ")]
     [SerializeField] bool DrawDebug;
@@ -100,7 +102,7 @@ public class PlayerController : MonoBehaviour, IDamage
         shootTimer = 0;
 
         RaycastHit Hit;
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out Hit, shootDist))
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out Hit, shootDist, ~ignoreLayer))
         {
             Debug.Log(Hit.collider.name);
             IDamage dmg = Hit.collider.GetComponent<IDamage>();
