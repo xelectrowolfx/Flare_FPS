@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,12 +9,15 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
 
+
     [Header("       Game State      ")]
     public bool isPaused;
 
     [Header("       Player Variable      ")]
     public GameObject player;
     public PlayerController playerScript;
+    public Image playerHPBar;
+    public GameObject DamageScreen;
 
     float timeScaleOrig;
     

@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 
@@ -34,6 +35,7 @@ public class PlayerController : MonoBehaviour, IDamage
     void Start()
     {
         HPOrig = HP;
+        UpdatePlayerUI();
     }
 
     // Update is called once per frame
@@ -116,10 +118,25 @@ public class PlayerController : MonoBehaviour, IDamage
     public void takeDamage(int amount)
     {
         HP -= amount;
+        StartCoroutine(FlashRed());
+        UpdatePlayerUI();
         //isdead?
         if(HP <= 0)
         {
             GameManager.instance.youLose();
+
         }
+    }
+
+    IEnumerator FlashRed()
+    {
+        GameManager.instance.DamageScreen.SetActive(true);
+        yield return new WaitForSeconds(0.1f);
+        GameManager.instance.DamageScreen.SetActive(false);
+    }
+
+    public void UpdatePlayerUI()
+    {
+        GameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
     }
 }
