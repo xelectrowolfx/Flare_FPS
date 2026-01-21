@@ -20,6 +20,9 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] int FOV;
     [SerializeField] LayerMask IgnoreLayer;
 
+    [SerializeField] GameObject dropItem;
+
+
     Color colorOrig;
     
     float shootTimer;
@@ -113,11 +116,17 @@ public class enemyAI : MonoBehaviour, IDamage
         if(HP <= 0)
         {
             GameManager.instance.updateGameGoal(-1);
+            if (dropItem != null)
+            {
+                Instantiate(dropItem, transform.position, transform.rotation);
+            }
             Destroy(gameObject);
         }
         else
         {
             StartCoroutine(flashRed());
+           
+            
         }
     }
 

@@ -69,7 +69,11 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup
         {
             playerVel.y -= gravity * Time.deltaTime;
         }
-        if (Input.GetButton("Fire1") && shootTimer >= shootRate)
+        if (Input.GetButtonDown("Reload") && gunList.Count > 0) {
+            gunList[gunListPos].ammoCur = gunList[gunListPos].ammoMax;
+        }
+        
+        if (Input.GetButton("Fire1") && gunList.Count > 0 && gunList[gunListPos].ammoCur > 0 && shootTimer >= shootRate)
         {
             shoot();
         }
@@ -105,11 +109,15 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup
     void shoot()
     {
         shootTimer = 0;
+        gunList[gunListPos].ammoCur--;
 
         RaycastHit Hit;
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.transform.forward, out Hit, shootDist, ~ignoreLayer))
         {
             Debug.Log(Hit.collider.name);
+
+            Instantiate(gunList[gunListPos].hitEffect, Hit.point, Quaternion.identity);
+
             IDamage dmg = Hit.collider.GetComponent<IDamage>();
             if (dmg != null)
             {
@@ -147,9 +155,17 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup
         GameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
     }
 
-    public void getGunSTats(GunStats gun)
+    public void getGunStats(GunStats gun)
     {
-        gunList.Add(gun);
+        if (gunList.Contains(gun))
+        {
+            gunList.Remove(gun);
+            gunList.Add(gun);
+        }
+        else
+        {
+            gunList.Add(gun);
+        }
         gunListPos = gunList.Count - 1;
 
         changeGun();
