@@ -1,9 +1,10 @@
 using System.Collections;
 using UnityEditor.UIElements;
 using UnityEngine;
+using System.Collections.Generic;
 
 
-public class PlayerController : MonoBehaviour, IDamage
+public class PlayerController : MonoBehaviour, IDamage, IPickup
 {
     [Header("       Components      ")]
     [SerializeField] CharacterController controller;
@@ -18,13 +19,15 @@ public class PlayerController : MonoBehaviour, IDamage
     [Header("       Physics      ")]
     [Range(15, 40)][SerializeField] int gravity;
     [SerializeField] LayerMask ignoreLayer;
-
-    [Header("       Gun      ")]
     [SerializeField] bool DrawDebug;
-    [SerializeField] int shootDamage;
-    [SerializeField] int shootDist;
-    [SerializeField] float shootRate;
+    [Header("       Gun      ")]
+    [SerializeField] List<GunStats> gunList = new List<GunStats>();
 
+    [SerializeField] GameObject gunmodel;
+
+    [Range(1, 10)][SerializeField] int shootDamage;
+    [Range(3, 1000)][SerializeField] int shootDist;
+    [Range(0.1f, 3)][SerializeField] float shootRate;
     Vector3 moveDir;
     Vector3 playerVel;
 
@@ -32,6 +35,7 @@ public class PlayerController : MonoBehaviour, IDamage
 
     int JumpCount;
     int HPOrig;
+    int gunListPos;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -48,6 +52,7 @@ public class PlayerController : MonoBehaviour, IDamage
     }
     void movement()
     {
+        selectGun();
         if (DrawDebug)
         {
             Debug.DrawRay(Camera.main.transform.position, Camera.main.transform.forward * shootDist, Color.red);
@@ -68,7 +73,7 @@ public class PlayerController : MonoBehaviour, IDamage
         {
             shoot();
         }
-            moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
+        moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
         controller.Move(moveDir * speed * Time.deltaTime);
         jump();
         controller.Move(playerVel * Time.deltaTime);
@@ -140,5 +145,40 @@ public class PlayerController : MonoBehaviour, IDamage
     public void UpdatePlayerUI()
     {
         GameManager.instance.playerHPBar.fillAmount = (float)HP / HPOrig;
+    }
+
+    public void getGunSTats(GunStats gun)
+    {
+        gunList.Add(gun);
+        gunListPos = gunList.Count - 1;
+
+        changeGun();
+
+    }
+    void changeGun()
+    {
+        shootDamage = gunList[gunListPos].shootDamage;
+        shootDist = gunList[gunListPos].shootDist;
+        shootRate = gunList[gunListPos].shootRate;
+        gunmodel.GetComponent<MeshFilter>().sharedMesh = gunList[gunListPos].gunModel.GetComponent<MeshFilter>().sharedMesh;
+        gunmodel.GetComponent<MeshRenderer>().sharedMaterial = gunList[gunListPos].gunModel.GetComponent<MeshRenderer>().sharedMaterial;
+    }
+
+    void selectGun()
+    {
+        if (Input.GetAxis("Mouse ScrollWheel") > 0 && gunListPos < gunList.Count -1)
+        {
+            gunListPos++;
+            changeGun();
+
+        }
+
+        else if (Input.GetAxis("Mouse ScrollWheel") < 0 && gunListPos > 0)
+        {
+            gunListPos--;
+            changeGun();
+        }
+
+        
     }
 }

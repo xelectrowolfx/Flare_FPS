@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5534874847616532687
+--- !u!1 &4216017337848992401
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,50 +8,86 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5153248227824097909}
-  - component: {fileID: 8082791865437574608}
-  - component: {fileID: 6327327856342999322}
+  - component: {fileID: 631029095793933804}
+  - component: {fileID: 2412373079291822636}
+  - component: {fileID: 5678084219747437419}
+  - component: {fileID: 7494164061597374284}
+  - component: {fileID: 3942910047806674211}
   m_Layer: 0
-  m_Name: M1918Bar-WithoutMag
+  m_Name: Gun-PickUp-Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5153248227824097909
+--- !u!4 &631029095793933804
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5534874847616532687}
+  m_GameObject: {fileID: 4216017337848992401}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 10.14, y: 0.76, z: -11.89}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &8082791865437574608
+--- !u!114 &2412373079291822636
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4216017337848992401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8340a2a184f06aa45aec2a18a7aaad5e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::pickupGuns
+  gun: {fileID: 11400000, guid: 171b8d9c0aeaee247b9e91b2ba330298, type: 2}
+--- !u!135 &5678084219747437419
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4216017337848992401}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 8
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Radius: 1.5028949
+  m_Center: {x: -0.018080603, y: -0.12615126, z: 0.15682381}
+--- !u!33 &7494164061597374284
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5534874847616532687}
-  m_Mesh: {fileID: 7753405534921295286, guid: c1ce864051db441b9bfac2723519107a, type: 3}
---- !u!23 &6327327856342999322
+  m_GameObject: {fileID: 4216017337848992401}
+  m_Mesh: {fileID: -6642371431653917376, guid: e23ab8f095718425c967ae1e8ad24cf5, type: 3}
+--- !u!23 &3942910047806674211
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5534874847616532687}
+  m_GameObject: {fileID: 4216017337848992401}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
+  m_DynamicOccludee: 0
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -66,7 +102,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 2edc7b0cc34ac4680b9ff4f527c30174, type: 2}
+  - {fileID: 2100000, guid: a3f8898e8f9af43a3b665c72458d32e9, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

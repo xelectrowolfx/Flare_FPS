@@ -1721,10 +1721,15 @@ MonoBehaviour:
   agent: {fileID: 499476488}
   model: {fileID: 495228613}
   shootPos: {fileID: 1591257705}
+  headPos: {fileID: 0}
   bullet: {fileID: 7307199370166870057, guid: 42246933517c66f4097763e806439334, type: 3}
   HP: 3
   shootRate: 0.5
   faceTargetSpeed: 3
+  FOV: 0
+  IgnoreLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!195 &499476488
 NavMeshAgent:
   m_ObjectHideFlags: 0
