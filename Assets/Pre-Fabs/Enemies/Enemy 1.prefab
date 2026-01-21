@@ -431,6 +431,8 @@ MonoBehaviour:
   IgnoreLayer:
     serializedVersion: 2
     m_Bits: 1024
+  RoamDist: 15
+  RoamPauseTime: 3
   dropItem: {fileID: 0}
 --- !u!195 &4681734441424477370
 NavMeshAgent:

@@ -20,15 +20,22 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] int FOV;
     [SerializeField] LayerMask IgnoreLayer;
 
+    [SerializeField] int RoamDist;
+    [SerializeField] int RoamPauseTime;
+
     [SerializeField] GameObject dropItem;
 
 
     Color colorOrig;
-    
+
+    float RoamTimer;
+    float stoppingDistOrig;
+
     float shootTimer;
     float angleToPlayer;
 
     Vector3 playerdir;
+    Vector3 startingPos;
 
     bool playerinTrigger;
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -36,17 +43,46 @@ public class enemyAI : MonoBehaviour, IDamage
     {
         colorOrig = model.material.color;
         GameManager.instance.updateGameGoal(1);
+        startingPos = transform.position;
+        stoppingDistOrig = agent.stoppingDistance;
     }
+    void Roam()
+    {
+        RoamTimer = 0;
+        agent.stoppingDistance = 0;
+        Vector3 ranPos = Random.insideUnitSphere * RoamDist;
+        ranPos += startingPos;
+        NavMeshHit hit;
+        NavMesh.SamplePosition(ranPos, out hit, RoamDist, 1);
+        agent.SetDestination(hit.position);
 
+
+    }
+    void checkRoam()
+    {
+        if(agent.remainingDistance < 0.01f && RoamTimer >= RoamPauseTime)
+        {
+            Roam();
+
+        }
+    }
     // Update is called once per frame
     void Update()
     {
         shootTimer += Time.deltaTime;
-        if (playerinTrigger && CanSeePlayer())
+        if(agent.remainingDistance < 0.1f)
         {
-            
+            RoamTimer += Time.deltaTime;
         }
         
+        if (playerinTrigger && !CanSeePlayer())
+        {
+            checkRoam();
+        }
+        else if (!playerinTrigger)
+        {
+            checkRoam();
+        }
     }
     bool CanSeePlayer()
     {
@@ -71,11 +107,12 @@ public class enemyAI : MonoBehaviour, IDamage
                     shoot();
                 }
 
-
+                agent.stoppingDistance = stoppingDistOrig;
                 return true;
             }
         }
 
+        agent.stoppingDistance = 0;
      
         return false;
     }
@@ -94,6 +131,7 @@ public class enemyAI : MonoBehaviour, IDamage
         if (other.CompareTag("Player"))
         {
             playerinTrigger = false;
+            agent.stoppingDistance = 0;
         }
     }
     void shoot()
