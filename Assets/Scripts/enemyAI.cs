@@ -66,6 +66,7 @@ public class enemyAI : MonoBehaviour, IDamage
 
         }
     }
+ 
     // Update is called once per frame
     void Update()
     {
@@ -77,10 +78,12 @@ public class enemyAI : MonoBehaviour, IDamage
         
         if (playerinTrigger && !CanSeePlayer())
         {
+           
             checkRoam();
         }
         else if (!playerinTrigger)
         {
+           
             checkRoam();
         }
     }
@@ -100,6 +103,7 @@ public class enemyAI : MonoBehaviour, IDamage
                 if (agent.remainingDistance <= agent.stoppingDistance)
                 {
                     faceTarget();
+                    
                 }
 
                 if (shootTimer >= shootRate)
@@ -137,7 +141,6 @@ public class enemyAI : MonoBehaviour, IDamage
     void shoot()
     {
         shootTimer = 0;
-
         Instantiate(bullet, shootPos.position, transform.rotation);
 
     }
