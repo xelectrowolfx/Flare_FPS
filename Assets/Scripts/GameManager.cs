@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     [SerializeField] GameObject menuWin;
     [SerializeField] GameObject menuLose;
     [SerializeField] TMP_Text gameGoalCountText;
+    public GameObject checkpointPopup;
 
     [Header("       Game State      ")]
     public bool isPaused;
@@ -19,6 +20,8 @@ public class GameManager : MonoBehaviour
     public PlayerController playerScript;
     public Image playerHPBar;
     public GameObject DamageScreen;
+    public GameObject playerSpawnPos;
+
 
     float timeScaleOrig;
     
@@ -32,6 +35,7 @@ public class GameManager : MonoBehaviour
         timeScaleOrig = Time.timeScale;
         player = GameObject.FindWithTag("Player");
         playerScript = player.GetComponent<PlayerController>();
+        playerSpawnPos = GameObject.FindWithTag("PlayerSpawnPos");
 
     }
 
