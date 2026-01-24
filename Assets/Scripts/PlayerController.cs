@@ -41,7 +41,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup
     void Start()
     {
         HPOrig = HP;
-        UpdatePlayerUI();
+        spawnPlayer();
     }
 
     // Update is called once per frame
@@ -196,5 +196,13 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup
         }
 
         
+    }
+
+    public void spawnPlayer()
+    {
+        controller.transform.position = GameManager.instance.playerSpawnPos.transform.position;
+        HP = HPOrig;
+        UpdatePlayerUI();
+        Physics.SyncTransforms();
     }
 }
