@@ -423,6 +423,8 @@ MonoBehaviour:
   model: {fileID: 3137550315971568137}
   shootPos: {fileID: 7807163264555063181}
   headPos: {fileID: 6007720242615196153}
+  anim: {fileID: 5091915368778273859}
+  animTransSpeed: 8
   bullet: {fileID: 7307199370166870057, guid: 42246933517c66f4097763e806439334, type: 3}
   HP: 3
   shootRate: 0.5
@@ -445,7 +447,7 @@ NavMeshAgent:
   m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 16
+  m_Acceleration: 5
   avoidancePriority: 50
   m_AngularSpeed: 600
   m_StoppingDistance: 5
@@ -469,7 +471,7 @@ Animator:
   m_Controller: {fileID: 9100000, guid: c0b143da4521432419546d096f881683, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
-  m_ApplyRootMotion: 1
+  m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
   m_AnimatePhysics: 0

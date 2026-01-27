@@ -11,7 +11,9 @@ public class enemyAI : MonoBehaviour, IDamage
     [SerializeField] Renderer model;
     [SerializeField] Transform shootPos;
     [SerializeField] Transform headPos;
-    
+    [SerializeField] Animator anim;
+    [SerializeField] int animTransSpeed;
+
     [SerializeField] GameObject bullet;
 
     [SerializeField] int HP;
@@ -70,6 +72,8 @@ public class enemyAI : MonoBehaviour, IDamage
     // Update is called once per frame
     void Update()
     {
+        locoAnim();
+
         shootTimer += Time.deltaTime;
         if(agent.remainingDistance < 0.1f)
         {
@@ -86,6 +90,13 @@ public class enemyAI : MonoBehaviour, IDamage
            
             checkRoam();
         }
+    }
+    void locoAnim()
+    {
+        float agentSpeedCur = agent.velocity.normalized.magnitude;
+        float agentSpeedAnim = anim.GetFloat("Speed");
+
+        anim.SetFloat("Speed", Mathf.MoveTowards(agentSpeedAnim,agentSpeedCur, Time.deltaTime * animTransSpeed));
     }
     bool CanSeePlayer()
     {
@@ -138,10 +149,16 @@ public class enemyAI : MonoBehaviour, IDamage
             agent.stoppingDistance = 0;
         }
     }
+
+    public void createBullet()
+    {
+        Instantiate(bullet, shootPos.position, transform.rotation);
+    }
     void shoot()
     {
         shootTimer = 0;
-        Instantiate(bullet, shootPos.position, transform.rotation);
+        anim.SetTrigger("Shoot");
+       
 
     }
 

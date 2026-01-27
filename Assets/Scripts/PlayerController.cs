@@ -28,6 +28,13 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup
     [Range(1, 10)][SerializeField] int shootDamage;
     [Range(3, 1000)][SerializeField] int shootDist;
     [Range(0.1f, 3)][SerializeField] float shootRate;
+    [Header("---- Audio ----")]
+    [SerializeField] AudioClip[] audStep;
+    [Range(0, 1)][SerializeField] float audStepVol;
+    [SerializeField] AudioSource aud;
+    [SerializeField] AudioClip[] audJump;
+    [Range(0,1)][SerializeField] float audJumpVol;
+
     Vector3 moveDir;
     Vector3 playerVel;
 
@@ -36,6 +43,10 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup
     int JumpCount;
     int HPOrig;
     int gunListPos;
+
+    bool isSprinting;
+    bool isPlayingSteps;
+
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -64,6 +75,10 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup
         if (controller.isGrounded)
         {
             JumpCount = 0;
+            if(moveDir.normalized.magnitude > 0.3f && !isPlayingSteps)
+            {
+                StartCoroutine(playStep());
+            }
         }
         else
         {
@@ -78,6 +93,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup
             shoot();
         }
         moveDir = Input.GetAxis("Horizontal") * transform.right + Input.GetAxis("Vertical") * transform.forward;
+        
         controller.Move(moveDir * speed * Time.deltaTime);
         jump();
         controller.Move(playerVel * Time.deltaTime);
@@ -90,7 +106,7 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup
         {
             playerVel.y = jumpSpeed;
             JumpCount++;
-
+            aud.PlayOneShot(audJump[Random.Range(0, audJump.Length)], audJumpVol);
         }
     }
 
@@ -98,16 +114,34 @@ public class PlayerController : MonoBehaviour, IDamage, IPickup
     {
         if (Input.GetButtonDown("Sprint"))
         {
+            isSprinting = true;
             speed *= sprintMod;
         }
         else if (Input.GetButtonUp("Sprint"))
         {
             speed /= sprintMod;
+            isSprinting = false;
         }
     }
+    IEnumerator playStep()
+    {
+        isPlayingSteps = true;
+        aud.PlayOneShot(audStep[Random.Range(0,audStep.Length)],audStepVol);
 
+        if (isSprinting)
+        {
+            yield return new WaitForSeconds(.3f);
+
+        }
+        else
+        {
+            yield return new WaitForSeconds(.5f);
+        }
+        isPlayingSteps = false;
+    }
     void shoot()
     {
+        aud.PlayOneShot(gunList[gunListPos].ShootSound[Random.Range(0, gunList[gunListPos].ShootSound.Length)]);
         shootTimer = 0;
         gunList[gunListPos].ammoCur--;
 
